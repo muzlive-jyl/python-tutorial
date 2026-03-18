@@ -1,0 +1,144 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  currentSlug?: string;
+}
+
+const { currentSlug } = Astro.props;
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+const allChapters = await getCollection('chapters');
+const chapters = allChapters.sort((a, b) => a.data.order - b.data.order);
+
+const part1 = chapters.filter((c) => c.data.part === 1);
+const part2 = chapters.filter((c) => c.data.part === 2);
+---
+
+<nav class="nav">
+  <a href={base} class="logo">
+    <span class="logo-icon">🐍</span>
+    <span class="logo-text">Python 튜토리얼</span>
+  </a>
+
+  <div class="part">
+    <h3 class="part-title">Part 1: 파이썬 기초</h3>
+    <ul>
+      {
+        part1.map((chapter) => (
+          <li>
+            <a
+              href={`${base}${chapter.id}`}
+              class:list={[{ active: currentSlug === chapter.id }]}
+            >
+              <span class="chapter-number">{chapter.data.order}</span>
+              <span class="chapter-title">{chapter.data.title}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <div class="part">
+    <h3 class="part-title">Part 2: 프로젝트 실전</h3>
+    <ul>
+      {
+        part2.map((chapter) => (
+          <li>
+            <a
+              href={`${base}${chapter.id}`}
+              class:list={[{ active: currentSlug === chapter.id }]}
+            >
+              <span class="chapter-number">{chapter.data.order}</span>
+              <span class="chapter-title">{chapter.data.title}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</nav>
+
+<style>
+  .nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 1.5rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .logo-icon {
+    font-size: 1.5rem;
+  }
+
+  .logo-text {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  .part-title {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #94a3b8;
+    padding: 0 1.5rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 1.5rem;
+    text-decoration: none;
+    color: #475569;
+    font-size: 0.9rem;
+    transition: all 0.15s;
+  }
+
+  li a:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+  }
+
+  li a.active {
+    background: #eff6ff;
+    color: #3b82f6;
+    font-weight: 600;
+    border-right: 3px solid #3b82f6;
+  }
+
+  .chapter-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: #e2e8f0;
+    font-size: 0.75rem;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .active .chapter-number {
+    background: #3b82f6;
+    color: white;
+  }
+</style>

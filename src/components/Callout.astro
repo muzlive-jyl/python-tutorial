@@ -1,0 +1,74 @@
+---
+interface Props {
+  type?: 'tip' | 'warning' | 'info';
+}
+
+const { type = 'tip' } = Astro.props;
+
+const config = {
+  tip: { icon: '💡', label: '팁', bgClass: 'callout-tip' },
+  warning: { icon: '⚠️', label: '주의', bgClass: 'callout-warning' },
+  info: { icon: 'ℹ️', label: '참고', bgClass: 'callout-info' },
+};
+
+const { icon, label, bgClass } = config[type];
+---
+
+<div class:list={['callout', bgClass]}>
+  <div class="callout-header">
+    <span class="callout-icon">{icon}</span>
+    <span class="callout-label">{label}</span>
+  </div>
+  <div class="callout-body">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .callout {
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin: 1rem 0 1.5rem;
+    border-left: 4px solid;
+  }
+
+  .callout-tip {
+    background: #ecfdf5;
+    border-color: #10b981;
+  }
+
+  .callout-warning {
+    background: #fffbeb;
+    border-color: #f59e0b;
+  }
+
+  .callout-info {
+    background: #eff6ff;
+    border-color: #3b82f6;
+  }
+
+  .callout-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+  }
+
+  .callout-icon {
+    font-size: 1.1rem;
+  }
+
+  .callout-label {
+    font-size: 0.9rem;
+  }
+
+  .callout-body {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .callout-body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

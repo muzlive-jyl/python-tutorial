@@ -1,0 +1,63 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const chapters = await getCollection('chapters');
+  return chapters.map((chapter) => ({
+    params: { slug: chapter.id },
+    props: { chapter },
+  }));
+}
+
+const { chapter } = Astro.props;
+const { Content } = await render(chapter);
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+
+const allChapters = await getCollection('chapters');
+const sorted = allChapters.sort((a, b) => a.data.order - b.data.order);
+const currentIndex = sorted.findIndex((c) => c.id === chapter.id);
+const prev = currentIndex > 0 ? sorted[currentIndex - 1] : null;
+const next = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
+---
+
+<Layout title={chapter.data.title} currentSlug={chapter.id}>
+  <article>
+    <p class="chapter-label">Chapter {chapter.data.order}</p>
+    <h1>{chapter.data.title}</h1>
+    <p class="chapter-desc">{chapter.data.description}</p>
+    <hr />
+    <Content />
+  </article>
+
+  <nav class="chapter-nav">
+    {prev ? (
+      <a href={`${base}${prev.id}`}>← {prev.data.title}</a>
+    ) : (
+      <span />
+    )}
+    {next ? (
+      <a href={`${base}${next.id}`}>{next.data.title} →</a>
+    ) : (
+      <a href={base}>홈으로 돌아가기</a>
+    )}
+  </nav>
+</Layout>
+
+<style>
+  .chapter-label {
+    font-size: 0.85rem;
+    color: #3b82f6;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+
+  .chapter-desc {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-bottom: 0.5rem;
+  }
+</style>

@@ -1,0 +1,171 @@
+---
+import Layout from '../layouts/Layout.astro';
+const rawBase = import.meta.env.BASE_URL;
+const base = rawBase.endsWith('/') ? rawBase : `${rawBase}/`;
+---
+
+<Layout title="홈">
+  <div class="hero">
+    <h1>ASS-to-LRC 프로젝트로 배우는<br />Python 튜토리얼</h1>
+    <p class="subtitle">
+      실제 프로젝트 코드를 읽으며 배우는<br />
+      가장 실용적인 Python 입문서
+    </p>
+    <a href={`${base}01-what-is-python`} class="cta">시작하기 →</a>
+  </div>
+
+  <section class="features">
+    <div class="feature">
+      <span class="feature-icon">🎯</span>
+      <h3>실제 코드로 배우기</h3>
+      <p>ASS-to-LRC 변환기 프로젝트의 실제 코드를 예시로 사용합니다. 추상적인 예제가 아닌 진짜 코드!</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">📋</span>
+      <h3>따라하며 익히기</h3>
+      <p>모든 코드는 복사해서 직접 실행할 수 있습니다. 터미널에서 바로 결과를 확인하세요.</p>
+    </div>
+    <div class="feature">
+      <span class="feature-icon">🪜</span>
+      <h3>단계별 진행</h3>
+      <p>Hello World부터 시작해서 정규표현식, 테스트까지. 각 챕터가 다음 챕터의 기반이 됩니다.</p>
+    </div>
+  </section>
+
+  <section class="toc">
+    <h2>목차</h2>
+
+    <div class="toc-part">
+      <h3>Part 1: 파이썬 기초 — 언어의 기본기</h3>
+      <ol>
+        <li><a href={`${base}01-what-is-python`}>파이썬이란?</a> <span class="toc-desc">— Hello World와 .py 파일 실행</span></li>
+        <li><a href={`${base}02-variables`}>변수와 데이터 타입</a> <span class="toc-desc">— int, str, list, dict, tuple, bool</span></li>
+        <li><a href={`${base}03-strings`}>문자열 다루기</a> <span class="toc-desc">— strip, split, join, f-string, 슬라이싱</span></li>
+        <li><a href={`${base}04-functions`}>함수 만들기</a> <span class="toc-desc">— def, return, 매개변수, 기본값</span></li>
+        <li><a href={`${base}05-modules`}>모듈과 import</a> <span class="toc-desc">— 파일 간의 관계, from...import</span></li>
+      </ol>
+    </div>
+
+    <div class="toc-part">
+      <h3>Part 2: 프로젝트 실전 — 실제 코드 읽기</h3>
+      <ol start="6">
+        <li><a href={`${base}06-file-io`}>파일 읽기와 쓰기</a> <span class="toc-desc">— open, with, encoding</span></li>
+        <li><a href={`${base}07-control-flow`}>조건문과 반복문</a> <span class="toc-desc">— if/for/while, 컴프리헨션</span></li>
+        <li><a href={`${base}08-regex`}>정규표현식</a> <span class="toc-desc">— re 모듈, 패턴 매칭</span></li>
+        <li><a href={`${base}09-errors`}>에러 처리</a> <span class="toc-desc">— try/except, raise, sys.exit</span></li>
+        <li><a href={`${base}10-testing`}>테스트 작성</a> <span class="toc-desc">— unittest로 코드 검증하기</span></li>
+      </ol>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .hero {
+    text-align: center;
+    padding: 3rem 0 4rem;
+  }
+
+  .hero h1 {
+    font-size: 2.5rem;
+    line-height: 1.3;
+    border-bottom: none;
+    margin-bottom: 1rem;
+  }
+
+  .subtitle {
+    font-size: 1.15rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+  }
+
+  .cta {
+    display: inline-block;
+    padding: 0.875rem 2rem;
+    background: #3b82f6;
+    color: white;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: background 0.2s;
+  }
+
+  .cta:hover {
+    background: #2563eb;
+  }
+
+  .features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0 3rem;
+  }
+
+  .feature {
+    padding: 1.5rem;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .feature-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.75rem;
+  }
+
+  .feature h3 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .feature p {
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0;
+  }
+
+  .toc {
+    margin-top: 1rem;
+  }
+
+  .toc h2 {
+    border-bottom: 2px solid #e2e8f0;
+    padding-bottom: 0.5rem;
+  }
+
+  .toc-part {
+    margin-bottom: 2rem;
+  }
+
+  .toc-part h3 {
+    font-size: 1rem;
+    color: #64748b;
+    margin-bottom: 0.75rem;
+    margin-top: 1.5rem;
+  }
+
+  .toc ol {
+    padding-left: 1.5rem;
+  }
+
+  .toc li {
+    margin-bottom: 0.75rem;
+  }
+
+  .toc a {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .toc a:hover {
+    text-decoration: underline;
+  }
+
+  .toc-desc {
+    color: #94a3b8;
+    font-size: 0.9rem;
+  }
+</style>
